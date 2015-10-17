@@ -5,10 +5,6 @@ Parallelized stream implementation for elixir
 
 Parallelize some stream operations in Elixir whilst keeping your stream in order.
 
-## When do we want it?
-
-Now.
-
 ## How do I get it?
 
 Add
