@@ -12,7 +12,7 @@ defmodule ParallelStream.Mixfile do
         name: "Parallel Stream",
         consolidate_protocols: true,
         source_url: "https://github.com/beatrichartz/parallel_stream",
-        description: "Parallel streams operations for Elixir"
+        description: "Parallel stream operations for Elixir"
     ]
   end
 
@@ -26,10 +26,6 @@ defmodule ParallelStream.Mixfile do
 
   defp deps do
     [
-      {:benchfella, only: :bench},
-      {:ex_csv, only: :bench},
-      {:csvlixir, only: :bench},
-      {:cesso, only: :bench},
       {:ex_doc, only: :docs},
       {:inch_ex, only: :docs},
       {:earmark, only: :docs}
