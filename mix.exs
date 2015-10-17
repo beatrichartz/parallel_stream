@@ -9,7 +9,7 @@ defmodule ParallelStream.Mixfile do
         deps: deps,
         package: package,
         docs: &docs/0,
-        name: "CSV",
+        name: "Parallel Stream",
         consolidate_protocols: true,
         source_url: "https://github.com/beatrichartz/parallel_stream",
         description: "Parallel streams operations for Elixir"
