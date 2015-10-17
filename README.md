@@ -16,7 +16,7 @@ to your deps in `mix.exs` like so:
 ```elixir
 defp deps do
   [
-    {:csv, "~> 0.1.0"}
+    {:parallel_stream, "~> 0.1.0"}
   ]
 end
 ```
