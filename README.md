@@ -25,7 +25,7 @@ Note: Elixir `1.1.0` is required
 
 ## How to use
 
-Do this to parallelize a map:
+Do this to parallelize a `map`:
 
 ````elixir
 1..100 |> ParallelStream.map(fn i -> i * 2 end)
@@ -33,7 +33,7 @@ Do this to parallelize a map:
 
 And you'll get a stream of mapped values which you can then for example `Enum.into([])`.
 
-More supported functions are `each`:
+More supported functions are `each` (to produce side-effects):
 
 ````elixir
 1..100 |> ParallelStream.each(&IO.inspect/1)
