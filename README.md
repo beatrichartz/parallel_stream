@@ -28,10 +28,12 @@ Note: Elixir `1.1.0` is required
 Do this to parallelize a `map`:
 
 ````elixir
-1..100 |> ParallelStream.map(fn i -> i * 2 end)
+stream = 1..10 |> ParallelStream.map(fn i -> i * 2 end)
+stream |> Enum.into([])
+[2,4,6,8,10,12,14,16,18,20]
 ````
 
-And you'll get a stream of mapped values which you can then for example `Enum.into([])`.
+The generated stream is sorted the same as the input stream. 
 
 More supported functions are `each` (to produce side-effects):
 
@@ -42,13 +44,17 @@ More supported functions are `each` (to produce side-effects):
 `filter`:
 
 ````elixir
-1..100 |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
+stream = 1..20 |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
+stream |> Enum.into([])
+[2,4,6,8,10,12,14,16,18,20]
 ````
 
 and `filter`'s counterpart, `reject`:
 
 ````elixir
-1..100 |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)
+stream = 1..20 |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)
+stream |> Enum.into([])
+[1,3,5,7,9,11,13,15,17,19]
 ````
 
 ## License
