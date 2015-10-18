@@ -43,6 +43,14 @@ defmodule ParallelStream.FilterTest do
     Process.flag(:trap_exit, trap)
   end
 
+  test ".filter filters the stream in order" do
+    result = 1..1000
+              |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
+              |> Enum.into([])
+
+    assert result == 1..1000 |> Enum.filter(fn i -> i |> rem(2) == 0 end)
+  end
+
   test ".filter parallelizes the filter function" do
     { microseconds, :ok } = :timer.tc fn ->
       1..5

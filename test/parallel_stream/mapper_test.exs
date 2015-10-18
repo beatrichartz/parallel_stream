@@ -23,6 +23,14 @@ defmodule ParallelStream.MapperTest do
     assert result == []
   end
 
+  test ".map maps the stream in order" do
+    result = 1..1000
+              |> ParallelStream.map(&Integer.to_string/1)
+              |> Enum.into([])
+
+    assert result == 1..1000 |> Enum.map(&Integer.to_string/1)
+  end
+
   test ".map does propagate errors via links" do
     trap = Process.flag(:trap_exit, true)
     pid = spawn_link fn ->

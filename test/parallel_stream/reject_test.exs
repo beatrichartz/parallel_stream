@@ -43,6 +43,14 @@ defmodule ParallelStream.RejectTest do
     Process.flag(:trap_exit, trap)
   end
 
+  test ".reject rejects the stream in order" do
+    result = 1..1000
+              |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)
+              |> Enum.into([])
+
+    assert result == 1..1000 |> Enum.reject(fn i -> i |> rem(2) == 0 end)
+  end
+
   test ".reject parallelizes the filter function" do
     { microseconds, :ok } = :timer.tc fn ->
       1..5
