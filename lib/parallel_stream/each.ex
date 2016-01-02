@@ -15,21 +15,21 @@ defmodule ParallelStream.Each do
     """
 
     def build!(stream) do
-      stream |> Stream.transform 0, fn items, acc ->
+      stream |> Stream.transform(0, fn items, acc ->
         items |> receive_from_relay
 
         { items, acc + 1 }
-      end
+      end)
     end
 
     defp receive_from_relay(items) do
-      items |> Enum.each fn { relay, index } ->
-        relay |> send :next
+      items |> Enum.each(fn { relay, index } ->
+        relay |> send(:next)
         receive do
           { ^relay, { ^index, item } } ->
             item
         end
-      end
+      end)
     end
   end
 

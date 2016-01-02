@@ -15,9 +15,9 @@ defmodule ParallelStream.Filter do
     """
 
     def build!(stream, direction) do
-      stream |> Stream.transform 0, fn items, acc ->
+      stream |> Stream.transform(0, fn items, acc ->
         filtered = items |> Enum.reduce([], fn { relay, index }, list ->
-          relay |> send :next
+          relay |> send(:next)
           receive do
             { ^relay, { ^index, accepted, item } } ->
               case !!accepted do
@@ -28,7 +28,7 @@ defmodule ParallelStream.Filter do
         end)
 
         { filtered, acc + 1 }
-      end
+      end)
     end
   end
 

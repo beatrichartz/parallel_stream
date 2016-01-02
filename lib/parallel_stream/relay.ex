@@ -7,8 +7,7 @@ defmodule ParallelStream.Relay do
             send receiver, { self, item }
             receiver |> listen
         end
-      :halt ->
-
+      :halt -> :halt #noop
     end
   end
 end

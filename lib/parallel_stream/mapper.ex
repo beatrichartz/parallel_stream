@@ -15,21 +15,21 @@ defmodule ParallelStream.Mapper do
     """
 
     def build!(stream) do
-      stream |> Stream.transform 0, fn items, acc ->
+      stream |> Stream.transform(0, fn items, acc ->
         mapped = items |> receive_from_relay
 
         { mapped, acc + 1 }
-      end
+      end)
     end
 
     defp receive_from_relay(items) do
-      items |> Enum.map fn { relay, index } ->
-        relay |> send :next
+      items |> Enum.map(fn { relay, index } ->
+        relay |> send(:next)
         receive do
           { ^relay, { ^index, item } } ->
             item
         end
-      end
+      end)
     end
   end
 

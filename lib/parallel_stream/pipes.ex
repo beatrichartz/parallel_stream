@@ -4,9 +4,9 @@ defmodule ParallelStream.Pipes do
 
   def build!(num, fun, executor \\ Executor)
   def build!(num, fun, executor) when is_integer(num) do
-    1..num |> Enum.map fn _ ->
+    1..num |> Enum.map(fn _ ->
       self |> build!(fun, executor)
-    end
+    end)
   end
   def build!(receiver, fun, executor) do
     { :ok, relay } = Task.start_link fn ->
