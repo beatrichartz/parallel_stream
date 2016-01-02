@@ -4,7 +4,7 @@ defmodule ParallelStream.Mixfile do
   def project do
     [
         app: :parallel_stream,
-        version: "0.1.0",
+        version: "0.1.1",
         elixir: "~> 1.1",
         deps: deps,
         package: package,
