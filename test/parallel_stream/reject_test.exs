@@ -65,7 +65,7 @@ defmodule ParallelStream.RejectTest do
   test ".reject parallelizes the filter function with the number of parallel streams defined" do
     { microseconds, :ok } = :timer.tc fn ->
       1..12
-      |> ParallelStream.reject(fn _ -> :timer.sleep(10) end, num_pipes: 12)
+      |> ParallelStream.reject(fn _ -> :timer.sleep(10) end, num_workers: 12)
       |> Stream.run
     end
 

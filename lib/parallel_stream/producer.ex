@@ -2,11 +2,11 @@ defmodule ParallelStream.Producer do
   def build!(stream, inqueue, outqueues) do
     outqueue_count = outqueues |> Enum.count
     stream
-    |> Stream.chunk(outqueue_count * 5, outqueue_count * 5, [])
+    |> Stream.chunk(outqueue_count * 10, outqueue_count * 10, [])
     |> Stream.transform(fn -> 0 end, fn items, index ->
       mapped = items |> map_to_outqueue(index, inqueue, outqueues)
 
-      { [mapped], index + outqueue_count * 5 }
+      { [mapped], index + outqueue_count * 10 }
     end, fn index ->
       inqueue |> send(:halt)
     end)

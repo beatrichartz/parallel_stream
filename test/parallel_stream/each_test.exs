@@ -80,7 +80,7 @@ defmodule ParallelStream.EachTest do
   test ".map parallelizes the iteration function with the number of parallel streams defined" do
     { microseconds, :ok } = :timer.tc fn ->
       1..12
-      |> ParallelStream.each(fn _ -> :timer.sleep(10) end, num_pipes: 12)
+      |> ParallelStream.each(fn _ -> :timer.sleep(10) end, num_workers: 12)
       |> Stream.run
     end
 

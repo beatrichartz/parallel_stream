@@ -32,21 +32,20 @@ defmodule ParallelStream.MapperTest do
     assert result == 1..1000 |> Enum.map(&Integer.to_string/1)
   end
 
-  @tag timeout: 10000
   test ".map parallelizes the mapping function with work stealing" do
     { microseconds, :ok } = :timer.tc fn ->
-      1..50
+      1..500
       |> ParallelStream.map(fn i ->
         if rem(i,20) == 10 do
-          :timer.sleep(20)
+          :timer.sleep(10)
         else
           :timer.sleep(1)
         end
-      end, num_pipes: 15)
+      end, num_workers: 50)
       |> Stream.run
     end
 
-    assert microseconds < 45000
+    assert microseconds < 100000
   end
 
 
@@ -83,7 +82,7 @@ defmodule ParallelStream.MapperTest do
   test ".map parallelizes the mapping function with the number of parallel streams defined" do
     { microseconds, :ok } = :timer.tc fn ->
       1..12
-      |> ParallelStream.map(fn _ -> :timer.sleep(10) end, num_pipes: 12)
+      |> ParallelStream.map(fn _ -> :timer.sleep(10) end, num_workers: 12)
       |> Stream.run
     end
 

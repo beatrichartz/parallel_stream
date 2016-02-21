@@ -15,7 +15,7 @@ defmodule ParallelStream do
 
   These are the options:
 
-    * `:num_pipes`   – The number of parallel operations to run when running the stream.
+    * `:num_workers`   – The number of parallel operations to run when running the stream.
 
   ## Examples
 
@@ -38,7 +38,7 @@ defmodule ParallelStream do
 
   These are the options:
 
-    * `:num_pipes`   – The number of parallel operations to run when running the stream.
+    * `:num_workers`   – The number of parallel operations to run when running the stream.
 
   ## Examples
 
@@ -62,7 +62,7 @@ defmodule ParallelStream do
 
   These are the options:
 
-    * `:num_pipes`   – The number of parallel operations to run when running the stream.
+    * `:num_workers`   – The number of parallel operations to run when running the stream.
 
   ## Examples
 
@@ -85,7 +85,7 @@ defmodule ParallelStream do
 
   These are the options:
 
-    * `:num_pipes`   – The number of parallel operations to run when running the stream.
+    * `:num_workers`   – The number of parallel operations to run when running the stream.
 
   ## Examples
 
