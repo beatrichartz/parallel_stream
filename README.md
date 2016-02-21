@@ -4,6 +4,7 @@ Parallelized stream implementation for elixir
 ## What does it do?
 
 Parallelize some stream operations in Elixir whilst keeping your stream in order.
+Operates with a worker pool.
 
 ## How do I get it?
 
