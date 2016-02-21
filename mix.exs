@@ -12,7 +12,9 @@ defmodule ParallelStream.Mixfile do
         name: "Parallel Stream",
         consolidate_protocols: true,
         source_url: "https://github.com/beatrichartz/parallel_stream",
-        description: "Parallel stream operations for Elixir"
+        description: "Parallel stream operations for Elixir",
+        test_coverage: [tool: ExCoveralls],
+        preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test]
     ]
   end
 
@@ -26,6 +28,7 @@ defmodule ParallelStream.Mixfile do
 
   defp deps do
     [
+      {:excoveralls, "~> 0.5", only: :test},
       {:ex_doc, only: :docs},
       {:inch_ex, only: :docs},
       {:earmark, only: :docs}
