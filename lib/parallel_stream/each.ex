@@ -52,11 +52,11 @@ defmodule ParallelStream.Each do
       [1,2,3,4,5]
   """
   def each(stream, mapper, options \\ []) do
-    pipes = options
+    { inqueue, outqueues } = options
             |> Keyword.get(:num_pipes)
             |> Workers.build!(mapper)
 
-    stream |> Producer.build!(pipes) 
+    stream |> Producer.build!(inqueue, outqueues)
            |> Consumer.build!
   end
 end

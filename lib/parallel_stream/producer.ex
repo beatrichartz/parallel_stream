@@ -1,30 +1,25 @@
 defmodule ParallelStream.Producer do
-  def build!(stream, pipes) do
-    num_pipes = pipes |> Enum.count
-
+  def build!(stream, inqueue, outqueues) do
+    outqueue_count = outqueues |> Enum.count
     stream
-    |> Stream.chunk(num_pipes, num_pipes, [])
+    |> Stream.chunk(outqueue_count, outqueue_count, [])
     |> Stream.transform(fn -> 0 end, fn items, index ->
-      mapped = items |> map_to_outqueue(index, pipes)
+      mapped = items |> map_to_outqueue(index, inqueue, outqueues)
 
-      { [mapped], index + num_pipes }
-    end, fn index -> 
-      pipes |> Enum.each(fn { inqueue, outqueue } ->
-        outqueue |> send(:halt)
-        inqueue |> send({ :halt, index })
-      end)
+      { [mapped], index + outqueue_count }
+    end, fn index ->
+      inqueue |> send(:halt)
     end)
   end
 
-  defp map_to_outqueue(items, index, pipes) do
-    num_pipes = pipes |> Enum.count
+  defp map_to_outqueue(items, index, inqueue, outqueues) do
+    outqueue_count = outqueues |> Enum.count
 
     items |> Stream.with_index |> Enum.map(fn { item, i } -> 
-      pipe_index = (index + i) |> rem(num_pipes)
-      { inqueue, outqueue } = pipes |> Enum.fetch!(pipe_index)
+      outqueue = outqueues |> Enum.at(rem(i, outqueue_count))
       inqueue |> send({ index + i, item, outqueue })
 
-      { outqueue, index + i } 
+      { outqueue, index + i }
     end)
   end
 end
