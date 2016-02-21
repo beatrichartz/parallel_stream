@@ -12,7 +12,7 @@ defmodule ParallelStream.Producer do
       mapped = items |> map_to_outqueue(index, inqueue, outqueues)
 
       { [mapped], index + chunk_size }
-    end, fn index ->
+    end, fn _ ->
       inqueue |> send(:halt)
       outqueues |> Enum.each(fn outqueue -> outqueue |> send(:halt) end)
       workers |> Enum.each(fn worker -> worker |> send(:halt) end)
