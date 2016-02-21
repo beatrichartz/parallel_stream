@@ -10,7 +10,6 @@ defmodule ParallelStream.Executor do
         :ok
       { index, item, outqueue } ->
         outqueue |> send({ index, fun.(item) })
-        execute(fun)
     end
   end
 end

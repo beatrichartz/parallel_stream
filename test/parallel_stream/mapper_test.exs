@@ -1,5 +1,6 @@
 defmodule ParallelStream.MapperTest do
   use ExUnit.Case, async: true
+  @moduletag timeout: 1000
 
   setup do
     # :observer.start

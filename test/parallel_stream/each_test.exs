@@ -1,5 +1,6 @@
 defmodule ParallelStream.EachTest do
   use ExUnit.Case, async: true
+  @moduletag timeout: 100
 
   setup do
     # :observer.start

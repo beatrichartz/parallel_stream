@@ -9,7 +9,6 @@ defmodule ParallelStream.FilterExecutor do
         :ok
       { index, item, outqueue } ->
         outqueue |> send({ index, fun.(item), item })
-        execute(fun)
     end
   end
 end
