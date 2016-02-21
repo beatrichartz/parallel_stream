@@ -1,4 +1,4 @@
-defmodule ParallelStream.Relay do
+defmodule ParallelStream.Outqueue do
   def listen(receiver) do
     receive do
       :next ->

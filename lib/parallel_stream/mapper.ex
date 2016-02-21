@@ -1,5 +1,5 @@
 defmodule ParallelStream.Mapper do
-  alias ParallelStream.Pipes
+  alias ParallelStream.Workers
   alias ParallelStream.Producer
 
   @moduledoc ~S"""
@@ -52,7 +52,7 @@ defmodule ParallelStream.Mapper do
   def map(stream, mapper, options \\ []) do
     pipes = options
             |> Keyword.get(:num_pipes)
-            |> Pipes.build!(mapper)
+            |> Workers.build!(mapper)
 
     stream |> Producer.build!(pipes) 
            |> Consumer.build!

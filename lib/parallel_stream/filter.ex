@@ -1,6 +1,6 @@
 defmodule ParallelStream.Filter do
   alias ParallelStream.FilterExecutor
-  alias ParallelStream.Pipes
+  alias ParallelStream.Workers
   alias ParallelStream.Producer
 
   @moduledoc ~S"""
@@ -52,7 +52,7 @@ defmodule ParallelStream.Filter do
   def filter(stream, mapper, options \\ []) do
     pipes = options
             |> Keyword.get(:num_pipes)
-            |> Pipes.build!(mapper, FilterExecutor)
+            |> Workers.build!(mapper, FilterExecutor)
 
     stream |> Producer.build!(pipes) 
            |> Consumer.build!(true)
@@ -80,7 +80,7 @@ defmodule ParallelStream.Filter do
   def reject(stream, mapper, options \\ []) do
     pipes = options
             |> Keyword.get(:num_pipes)
-            |> Pipes.build!(mapper, FilterExecutor)
+            |> Workers.build!(mapper, FilterExecutor)
 
     stream |> Producer.build!(pipes) 
            |> Consumer.build!(false)

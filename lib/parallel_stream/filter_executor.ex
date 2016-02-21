@@ -3,13 +3,13 @@ defmodule ParallelStream.FilterExecutor do
   The filter executor - in addition to the normal executors return values,
   returns the value itself and the predicate
   """
-  def execute(relay, fun) do
+  def execute(fun) do
     receive do
       { :halt, _ } ->
         :ok
-      { index, item } ->
-        relay |> send({ index, fun.(item), item })
-        execute(relay, fun)
+      { index, item, outqueue } ->
+        outqueue |> send({ index, fun.(item), item })
+        execute(fun)
     end
   end
 end
