@@ -25,7 +25,7 @@ defmodule ParallelStream.Workers do
 
     1..num |> Enum.map(fn _ ->
       { :ok, outqueue } = Task.start_link fn ->
-        Outqueue.listen(receiver)
+        Outqueue.collect(receiver)
       end
       { :ok, worker } = Task.start_link fn ->
         Worker.work(inqueue, executor, fun)

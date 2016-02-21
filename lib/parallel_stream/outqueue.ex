@@ -1,11 +1,11 @@
 defmodule ParallelStream.Outqueue do
-  def listen(receiver) do
+  def collect(receiver) do
     receive do
       :next ->
         receive do
           item ->
             send receiver, { self, item }
-            receiver |> listen
+            receiver |> collect
         end
       :halt -> :halt #noop
     end

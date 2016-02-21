@@ -14,17 +14,17 @@ defmodule ParallelStream.Mapper do
 
     def build!(stream) do
       stream |> Stream.transform(0, fn items, acc ->
-        mapped = items |> receive_from_relay
+        mapped = items |> receive_from_outqueue
 
         { mapped, acc + 1 }
       end)
     end
 
-    defp receive_from_relay(items) do
-      items |> Enum.map(fn { relay, index } ->
-        relay |> send(:next)
+    defp receive_from_outqueue(items) do
+      items |> Enum.map(fn { outqueue, index } ->
+        outqueue |> send(:next)
         receive do
-          { ^relay, { ^index, item } } ->
+          { ^outqueue, { ^index, item } } ->
             item
         end
       end)

@@ -14,17 +14,17 @@ defmodule ParallelStream.Each do
 
     def build!(stream) do
       stream |> Stream.transform(0, fn items, acc ->
-        items |> receive_from_relay
+        items |> receive_from_outqueue
 
         { items, acc + 1 }
       end)
     end
 
-    defp receive_from_relay(items) do
-      items |> Enum.each(fn { relay, index } ->
-        relay |> send(:next)
+    defp receive_from_outqueue(items) do
+      items |> Enum.each(fn { outqueue, index } ->
+        outqueue |> send(:next)
         receive do
-          { ^relay, { ^index, item } } ->
+          { ^outqueue, { ^index, item } } ->
             item
         end
       end)
