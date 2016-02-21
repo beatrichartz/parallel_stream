@@ -51,11 +51,11 @@ defmodule ParallelStream.Filter do
       [2,4]
   """
   def filter(stream, mapper, options \\ []) do
-    { inqueue, outqueues } = options
+    { inqueue, workers, outqueues } = options
             |> Keyword.get(:num_workers)
             |> Workers.build!(mapper, FilterExecutor)
 
-    stream |> Producer.build!(inqueue, outqueues, options)
+    stream |> Producer.build!(inqueue, workers, outqueues, options)
            |> Consumer.build!(true)
   end
 
@@ -80,11 +80,11 @@ defmodule ParallelStream.Filter do
       [1,3,5]
   """
   def reject(stream, mapper, options \\ []) do
-    { inqueue, outqueues } = options
+    { inqueue, workers, outqueues } = options
             |> Keyword.get(:num_workers)
             |> Workers.build!(mapper, FilterExecutor)
 
-    stream |> Producer.build!(inqueue, outqueues, options)
+    stream |> Producer.build!(inqueue, workers, outqueues, options)
            |> Consumer.build!(false)
   end
 

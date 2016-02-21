@@ -5,7 +5,7 @@ defmodule ParallelStream.FilterExecutor do
   """
   def execute(fun) do
     receive do
-      { :halt, _ } ->
+      :halt ->
         :ok
       { index, item, outqueue } ->
         outqueue |> send({ index, fun.(item), item })

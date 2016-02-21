@@ -51,11 +51,11 @@ defmodule ParallelStream.Mapper do
       [2, 4, 6, 8, 10]
   """
   def map(stream, mapper, options \\ []) do
-    { inqueue, outqueues } = options
+    { inqueue, workers, outqueues } = options
             |> Keyword.get(:num_workers)
             |> Workers.build!(mapper)
 
-    stream |> Producer.build!(inqueue, outqueues, options)
+    stream |> Producer.build!(inqueue, workers, outqueues, options)
            |> Consumer.build!
   end
 

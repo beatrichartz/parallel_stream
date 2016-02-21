@@ -10,7 +10,7 @@ defmodule ParallelStream.Outqueue do
             send receiver, { self, { index, accept, item } }
             receiver |> collect
         end
-      :halt -> :halt #noop
+      :halt -> :ok #noop
     end
   end
 end

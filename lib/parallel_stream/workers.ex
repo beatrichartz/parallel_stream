@@ -31,13 +31,15 @@ defmodule ParallelStream.Workers do
       outqueue
     end)
 
-    1..num |> Enum.each(fn _ ->
+    workers = 1..num |> Enum.map(fn _ ->
       { :ok, worker } = Task.start_link fn ->
         Worker.work(inqueue, executor, fun)
       end
+
+      worker
     end)
 
-    { inqueue, outqueues }
+    { inqueue, workers, outqueues }
   end
 
 end

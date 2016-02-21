@@ -7,7 +7,7 @@ defmodule ParallelStream.Inqueue do
             send worker, { index, item, outqueue }
             distribute
         end
-      :halt -> :halt #noop
+      :halt -> :ok #noop
     end
   end
 end
