@@ -10,14 +10,14 @@ Operates with a worker pool.
 
 Add
 ```elixir
-{:parallel_stream, "~> 0.1.0"}
+{:parallel_stream, "~> 1.0.0"}
 ```
 to your deps in `mix.exs` like so:
 
 ```elixir
 defp deps do
   [
-    {:parallel_stream, "~> 0.1.0"}
+    {:parallel_stream, "~> 1.0.0"}
   ]
 end
 ```
