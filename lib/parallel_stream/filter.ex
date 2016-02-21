@@ -7,8 +7,6 @@ defmodule ParallelStream.Filter do
   The filter iterator implementation
   """
 
-  use ParallelStream.Defaults
-
   defmodule Consumer do
     @moduledoc ~S"""
     The filter consumer - filters according to direction passed
@@ -53,7 +51,7 @@ defmodule ParallelStream.Filter do
   """
   def filter(stream, mapper, options \\ []) do
     pipes = options
-            |> Keyword.get(:num_pipes, @num_pipes)
+            |> Keyword.get(:num_pipes)
             |> Pipes.build!(mapper, FilterExecutor)
 
     stream |> Producer.build!(pipes) 
@@ -81,7 +79,7 @@ defmodule ParallelStream.Filter do
   """
   def reject(stream, mapper, options \\ []) do
     pipes = options
-            |> Keyword.get(:num_pipes, @num_pipes)
+            |> Keyword.get(:num_pipes)
             |> Pipes.build!(mapper, FilterExecutor)
 
     stream |> Producer.build!(pipes) 

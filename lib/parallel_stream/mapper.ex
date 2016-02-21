@@ -6,8 +6,6 @@ defmodule ParallelStream.Mapper do
   The map iterator implementation
   """
 
-  use ParallelStream.Defaults
-
   defmodule Consumer do
     @moduledoc ~S"""
     The mapper - receives mapped stream values and returns them to the
@@ -53,7 +51,7 @@ defmodule ParallelStream.Mapper do
   """
   def map(stream, mapper, options \\ []) do
     pipes = options
-            |> Keyword.get(:num_pipes, @num_pipes)
+            |> Keyword.get(:num_pipes)
             |> Pipes.build!(mapper)
 
     stream |> Producer.build!(pipes) 

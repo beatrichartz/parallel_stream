@@ -6,8 +6,6 @@ defmodule ParallelStream.Each do
   The each iterator implementation
   """
 
-  use ParallelStream.Defaults
-
   defmodule Consumer do
     @moduledoc ~S"""
     The iterator consumer - receives stream values in order to
@@ -55,7 +53,7 @@ defmodule ParallelStream.Each do
   """
   def each(stream, mapper, options \\ []) do
     pipes = options
-            |> Keyword.get(:num_pipes, @num_pipes)
+            |> Keyword.get(:num_pipes)
             |> Pipes.build!(mapper)
 
     stream |> Producer.build!(pipes) 

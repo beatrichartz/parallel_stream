@@ -1,6 +1,11 @@
 defmodule ParallelStream.Pipes do
   alias ParallelStream.Executor
   alias ParallelStream.Relay
+  alias ParallelStream.Defaults
+
+  def build!(nil, fun, executor) do
+    build!(Defaults.num_pipes, fun, executor)
+  end
 
   def build!(num, fun, executor \\ Executor)
   def build!(num, fun, executor) when is_integer(num) do
