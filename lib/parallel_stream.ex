@@ -16,6 +16,7 @@ defmodule ParallelStream do
   These are the options:
 
     * `:num_workers`   – The number of parallel operations to run when running the stream.
+    * `:worker_work_ratio` – The available work per worker, defaults to 5. Higher rates will mean more work stealing, but might also lead to work fragmentation slowing down the queues.
 
   ## Examples
 
@@ -39,6 +40,7 @@ defmodule ParallelStream do
   These are the options:
 
     * `:num_workers`   – The number of parallel operations to run when running the stream.
+    * `:worker_work_ratio` – The available work per worker, defaults to 5. Higher rates will mean more work stealing, but might also lead to work fragmentation slowing down the queues.
 
   ## Examples
 
@@ -63,6 +65,7 @@ defmodule ParallelStream do
   These are the options:
 
     * `:num_workers`   – The number of parallel operations to run when running the stream.
+    * `:worker_work_ratio` – The available work per worker, defaults to 5. Higher rates will mean more work stealing, but might also lead to work fragmentation slowing down the queues.
 
   ## Examples
 
@@ -85,7 +88,8 @@ defmodule ParallelStream do
 
   These are the options:
 
-    * `:num_workers`   – The number of parallel operations to run when running the stream.
+    * `:num_workers`       – The number of parallel operations to run when running the stream.
+    * `:worker_work_ratio` – The available work per worker, defaults to 5. Higher rates will mean more work stealing, but might also lead to work fragmentation slowing down the queues.
 
   ## Examples
 

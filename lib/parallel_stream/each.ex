@@ -56,7 +56,7 @@ defmodule ParallelStream.Each do
             |> Keyword.get(:num_workers)
             |> Workers.build!(mapper)
 
-    stream |> Producer.build!(inqueue, outqueues)
+    stream |> Producer.build!(inqueue, outqueues, options)
            |> Consumer.build!
   end
 end

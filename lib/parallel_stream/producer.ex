@@ -1,12 +1,17 @@
 defmodule ParallelStream.Producer do
-  def build!(stream, inqueue, outqueues) do
-    outqueue_count = outqueues |> Enum.count
+  alias ParallelStream.Defaults
+
+  def build!(stream, inqueue, outqueues, options) do
+    worker_work_ratio = options |> Keyword.get(:worker_work_ratio, Defaults.worker_work_ratio)
+    worker_count = outqueues |> Enum.count
+    chunk_size = worker_count * worker_work_ratio
+
     stream
-    |> Stream.chunk(outqueue_count * 10, outqueue_count * 10, [])
+    |> Stream.chunk(chunk_size, chunk_size, [])
     |> Stream.transform(fn -> 0 end, fn items, index ->
       mapped = items |> map_to_outqueue(index, inqueue, outqueues)
 
-      { [mapped], index + outqueue_count * 10 }
+      { [mapped], index + chunk_size }
     end, fn index ->
       inqueue |> send(:halt)
     end)

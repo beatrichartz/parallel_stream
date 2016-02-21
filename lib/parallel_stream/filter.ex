@@ -54,7 +54,7 @@ defmodule ParallelStream.Filter do
             |> Keyword.get(:num_workers)
             |> Workers.build!(mapper, FilterExecutor)
 
-    stream |> Producer.build!(inqueue, outqueues)
+    stream |> Producer.build!(inqueue, outqueues, options)
            |> Consumer.build!(true)
   end
 
@@ -82,7 +82,7 @@ defmodule ParallelStream.Filter do
             |> Keyword.get(:num_workers)
             |> Workers.build!(mapper, FilterExecutor)
 
-    stream |> Producer.build!(inqueue, outqueues)
+    stream |> Producer.build!(inqueue, outqueues, options)
            |> Consumer.build!(false)
   end
 

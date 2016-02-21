@@ -72,4 +72,22 @@ defmodule ParallelStream.FilterTest do
     assert microseconds < 120000
   end
 
+  test ".filter parallelizes the filter function with work stealing" do
+    { microseconds, :ok } = :timer.tc fn ->
+      1..500
+      |> ParallelStream.filter(fn i ->
+        if rem(i,20) == 10 do
+          :timer.sleep(10)
+          false
+        else
+          :timer.sleep(1)
+          true
+        end
+      end, num_workers: 50)
+      |> Stream.run
+    end
+
+    assert microseconds < 100000
+  end
+
 end
