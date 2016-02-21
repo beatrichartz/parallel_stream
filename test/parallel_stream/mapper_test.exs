@@ -32,6 +32,23 @@ defmodule ParallelStream.MapperTest do
     assert result == 1..1000 |> Enum.map(&Integer.to_string/1)
   end
 
+  @tag timeout: 10000
+  test ".map parallelizes the mapping function with work stealing" do
+    { microseconds, :ok } = :timer.tc fn ->
+      1..20
+      |> ParallelStream.map(fn i ->
+        if rem(i,20) == 10 do
+          :timer.sleep(20)
+        else
+          :timer.sleep(1)
+        end
+      end, num_pipes: 5)
+      |> Stream.run
+    end
+
+    assert microseconds < 50000
+  end
+
   test ".map does propagate errors via links" do
     trap = Process.flag(:trap_exit, true)
     pid = spawn_link fn ->

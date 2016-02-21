@@ -14,10 +14,10 @@ defmodule ParallelStream.Filter do
 
     def build!(stream, direction) do
       stream |> Stream.transform(0, fn items, acc ->
-        filtered = items |> Enum.reduce([], fn { relay, index }, list ->
-          relay |> send(:next)
+        filtered = items |> Enum.reduce([], fn { outqueue, index }, list ->
+          outqueue |> send({ :next, index })
           receive do
-            { ^relay, { ^index, accepted, item } } ->
+            { ^outqueue, { ^index, accepted, item } } ->
               case !!accepted do
                 ^direction -> list ++ [item]
                 _ -> list

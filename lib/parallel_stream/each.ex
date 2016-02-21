@@ -22,7 +22,7 @@ defmodule ParallelStream.Each do
 
     defp receive_from_outqueue(items) do
       items |> Enum.each(fn { outqueue, index } ->
-        outqueue |> send(:next)
+        outqueue |> send({ :next, index })
         receive do
           { ^outqueue, { ^index, item } } ->
             item

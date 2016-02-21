@@ -1,10 +1,13 @@
 defmodule ParallelStream.Outqueue do
   def collect(receiver) do
     receive do
-      :next ->
+      { :next, index } ->
         receive do
-          item ->
-            send receiver, { self, item }
+          { ^index, item } ->
+            send receiver, { self, { index, item } }
+            receiver |> collect
+          { ^index, accept, item } ->
+            send receiver, { self, { index, accept, item } }
             receiver |> collect
         end
       :halt -> :halt #noop

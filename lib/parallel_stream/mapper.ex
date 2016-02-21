@@ -22,7 +22,7 @@ defmodule ParallelStream.Mapper do
 
     defp receive_from_outqueue(items) do
       items |> Enum.map(fn { outqueue, index } ->
-        outqueue |> send(:next)
+        outqueue |> send({ :next, index })
         receive do
           { ^outqueue, { ^index, item } } ->
             item
