@@ -35,19 +35,20 @@ defmodule ParallelStream.MapperTest do
   @tag timeout: 10000
   test ".map parallelizes the mapping function with work stealing" do
     { microseconds, :ok } = :timer.tc fn ->
-      1..20
+      1..50
       |> ParallelStream.map(fn i ->
         if rem(i,20) == 10 do
           :timer.sleep(20)
         else
           :timer.sleep(1)
         end
-      end, num_pipes: 5)
+      end, num_pipes: 15)
       |> Stream.run
     end
 
-    assert microseconds < 50000
+    assert microseconds < 45000
   end
+
 
   test ".map does propagate errors via links" do
     trap = Process.flag(:trap_exit, true)
