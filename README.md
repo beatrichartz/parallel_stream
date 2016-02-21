@@ -1,4 +1,4 @@
-# ParallelStream [![Build Status](https://travis-ci.org/beatrichartz/parallel_stream.svg?branch=master)](https://travis-ci.org/beatrichartz/parallel_stream) [![Inline docs](http://inch-ci.org/github/beatrichartz/parallel_stream.svg?branch=master)](http://inch-ci.org/github/beatrichartz/parallel_stream)
+# ParallelStream [![Build Status](https://travis-ci.org/beatrichartz/parallel_stream.svg?branch=master)](https://travis-ci.org/beatrichartz/parallel_stream) [![Coverage Status](https://coveralls.io/repos/github/beatrichartz/parallel_stream/badge.svg?branch=master)](https://coveralls.io/github/beatrichartz/parallel_stream?branch=master) [![Inline docs](http://inch-ci.org/github/beatrichartz/parallel_stream.svg?branch=master)](http://inch-ci.org/github/beatrichartz/parallel_stream)
 Parallelized stream implementation for elixir
 
 ## What does it do?
