@@ -33,6 +33,21 @@ defmodule ParallelStream.EachTest do
     assert TestReceiver.rec |> Enum.sort == [1, 2, 3, 4, 5]
   end
 
+  test ".each is repeatable" do
+    testmod = self
+
+    stream = 1..5
+    |> ParallelStream.each(fn i -> 
+      send testmod, i
+    end)
+    stream |> Stream.run
+    stream |> Stream.run
+
+    send self, :stop
+
+    assert TestReceiver.rec |> Enum.sort == [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
+  end
+
   test ".each iterates over a stream of zero length" do
     testmod = self
 

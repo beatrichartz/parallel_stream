@@ -16,6 +16,17 @@ defmodule ParallelStream.MapperTest do
     assert result == ~w(1 2 3 4 5)
   end
 
+  test ".map is repeatable" do
+    stream = 1..5
+              |> ParallelStream.map(&Integer.to_string/1)
+
+    result1 = stream |> Enum.into([])
+    assert result1 == ~w(1 2 3 4 5)
+
+    result2 = stream |> Enum.into([])
+    assert result2 == ~w(1 2 3 4 5)
+  end
+
   test ".map maps a stream of zero length" do
     result = []
               |> ParallelStream.map(&Integer.to_string/1)

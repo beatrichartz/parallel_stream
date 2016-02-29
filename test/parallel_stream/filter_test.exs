@@ -16,6 +16,17 @@ defmodule ParallelStream.FilterTest do
     assert result == [2, 4]
   end
 
+  test ".filter is repeatable" do
+    stream = 1..5
+              |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
+
+    result1 = stream |> Enum.into([])
+    assert result1 == [2, 4]
+
+    result2 = stream |> Enum.into([])
+    assert result2 == [2, 4]
+  end
+
   test ".filter filters a stream of zero length" do
     result = []
               |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)

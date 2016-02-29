@@ -1,5 +1,4 @@
 defmodule ParallelStream.Mapper do
-  alias ParallelStream.Workers
   alias ParallelStream.Producer
 
   @moduledoc ~S"""
@@ -51,12 +50,9 @@ defmodule ParallelStream.Mapper do
       [2, 4, 6, 8, 10]
   """
   def map(stream, mapper, options \\ []) do
-    { inqueue, workers, outqueues } = options
-            |> Keyword.get(:num_workers)
-            |> Workers.build!(mapper)
-
-    stream |> Producer.build!(inqueue, workers, outqueues, options)
-           |> Consumer.build!
+    stream
+    |> Producer.build!(mapper, options)
+    |> Consumer.build!
   end
 
 end

@@ -16,6 +16,17 @@ defmodule ParallelStream.RejectTest do
     assert result == [1, 3, 5]
   end
 
+  test ".reject is repeatable" do
+    stream = 1..5
+              |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)
+
+    result1 = stream |> Enum.into([])
+    assert result1 == [1, 3, 5]
+
+    result2 = stream |> Enum.into([])
+    assert result2 == [1, 3, 5]
+  end
+
   test ".reject filters a stream of zero length" do
     result = []
               |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
