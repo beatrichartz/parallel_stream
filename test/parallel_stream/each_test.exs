@@ -87,7 +87,7 @@ defmodule ParallelStream.EachTest do
     assert microseconds < 120000
   end
 
-  test ".each parallelizes the iteration function with work stealing" do
+  test ".each parallelizes the iteration function with work sharing" do
     { microseconds, :ok } = :timer.tc fn ->
       1..500
       |> ParallelStream.each(fn i ->

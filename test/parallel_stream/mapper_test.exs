@@ -72,7 +72,7 @@ defmodule ParallelStream.MapperTest do
     assert microseconds < 120000
   end
 
-  test ".map parallelizes the mapping function with work stealing" do
+  test ".map parallelizes the mapping function with work sharing" do
     { microseconds, :ok } = :timer.tc fn ->
       1..500
       |> ParallelStream.map(fn i ->

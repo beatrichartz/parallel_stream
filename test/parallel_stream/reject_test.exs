@@ -72,7 +72,7 @@ defmodule ParallelStream.RejectTest do
     assert microseconds < 120000
   end
 
-  test ".reject parallelizes the filter function with work stealing" do
+  test ".reject parallelizes the filter function with work sharing" do
     { microseconds, :ok } = :timer.tc fn ->
       1..500
       |> ParallelStream.reject(fn i ->
