@@ -1,5 +1,4 @@
 defmodule ParallelStream.Each do
-  alias ParallelStream.Workers
   alias ParallelStream.Producer
 
   @moduledoc ~S"""

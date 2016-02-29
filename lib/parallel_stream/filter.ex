@@ -1,6 +1,5 @@
 defmodule ParallelStream.Filter do
   alias ParallelStream.FilterExecutor
-  alias ParallelStream.Workers
   alias ParallelStream.Producer
 
   @moduledoc ~S"""
