@@ -12,10 +12,6 @@ defmodule ParallelStream.Workers do
     end
   end
 
-  def build!(num, fun, executor \\ Executor)
-  def build!(nil, fun, executor) do
-    build!(Defaults.num_workers, fun, executor)
-  end
   def build!(num, fun, executor) when is_integer(num) do
     { :ok, inqueue } = Task.start_link fn ->
       Inqueue.distribute
