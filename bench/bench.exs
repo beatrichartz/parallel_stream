@@ -13,7 +13,7 @@ defmodule Bench do
   bench "stream" do
     1..10000
     |> Stream.map(fn _ ->
-      :timer.sleep(1)
+      :erlang.md5(:crypto.strong_rand_bytes(32))
     end)
     |> Stream.run
   end
@@ -21,7 +21,7 @@ defmodule Bench do
   bench "parallel_stream" do
     1..10000
     |> ParallelStream.map(fn _ ->
-      :timer.sleep(1)
+      :erlang.md5(:crypto.strong_rand_bytes(32))
     end)
     |> Stream.run
   end
