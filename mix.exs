@@ -31,7 +31,8 @@ defmodule ParallelStream.Mixfile do
       {:excoveralls, "~> 0.5", only: :test},
       {:ex_doc, only: :docs},
       {:inch_ex, only: :docs},
-      {:earmark, only: :docs}
+      {:earmark, only: :docs},
+      {:benchfella, only: :bench}
     ]
   end
 
