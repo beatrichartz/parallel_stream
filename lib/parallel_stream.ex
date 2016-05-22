@@ -47,9 +47,8 @@ defmodule ParallelStream do
   Iterate and write the numbers to stdout:
 
       iex> parallel_stream = 1..5 |> ParallelStream.each(&IO.write/1)
-      iex> parallel_stream |> Enum.to_list
-      12345
-      [1,2,3,4,5]
+      iex> parallel_stream |> Stream.run
+      :ok # 12345 appears on stdout
   """
   def each(stream, iter, options \\ []) do
     Each.each(stream, iter, options)

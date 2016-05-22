@@ -2,11 +2,8 @@ defmodule ParallelStream.EachTest do
   use ExUnit.Case, async: true
   @moduletag timeout: 100
 
-  setup do
-    # :observer.start
-
-    :ok
-  end
+  alias ParallelStream.Each
+  doctest Each
 
   defmodule TestReceiver do
     def rec(received \\ []) do
@@ -14,7 +11,7 @@ defmodule ParallelStream.EachTest do
         :stop ->
           received
         i ->
-          rec(received ++ [i]) 
+          rec(received ++ [i])
       end
     end
   end
@@ -23,7 +20,7 @@ defmodule ParallelStream.EachTest do
     testmod = self
 
     1..5
-    |> ParallelStream.each(fn i -> 
+    |> ParallelStream.each(fn i ->
       send testmod, i
     end)
     |> Stream.run
@@ -37,7 +34,7 @@ defmodule ParallelStream.EachTest do
     testmod = self
 
     stream = 1..5
-    |> ParallelStream.each(fn i -> 
+    |> ParallelStream.each(fn i ->
       send testmod, i
     end)
     stream |> Stream.run
@@ -52,7 +49,7 @@ defmodule ParallelStream.EachTest do
     testmod = self
 
     []
-    |> ParallelStream.each(fn i -> 
+    |> ParallelStream.each(fn i ->
       send testmod, i
     end)
     |> Stream.run
@@ -66,7 +63,7 @@ defmodule ParallelStream.EachTest do
     trap = Process.flag(:trap_exit, true)
     pid = spawn_link fn ->
       [1,2]
-        |> ParallelStream.each(fn i -> 
+        |> ParallelStream.each(fn i ->
           if i |> rem(2) == 0 do
             raise RuntimeError
           end

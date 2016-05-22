@@ -2,11 +2,8 @@ defmodule ParallelStream.FilterTest do
   use ExUnit.Case, async: true
   @moduletag timeout: 1000
 
-  setup do
-    # :observer.start
-
-    :ok
-  end
+  alias ParallelStream.Filter
+  doctest Filter
 
   test ".filter filters a stream of variable length" do
     result = 1..5

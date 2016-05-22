@@ -2,11 +2,8 @@ defmodule ParallelStream.MapperTest do
   use ExUnit.Case, async: true
   @moduletag timeout: 1000
 
-  setup do
-    # :observer.start
-
-    :ok
-  end
+  alias ParallelStream.Mapper
+  doctest Mapper
 
   test ".map maps a stream of variable length" do
     result = 1..5

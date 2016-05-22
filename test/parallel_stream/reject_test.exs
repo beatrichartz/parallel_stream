@@ -2,12 +2,6 @@ defmodule ParallelStream.RejectTest do
   use ExUnit.Case, async: true
   @moduletag timeout: 1000
 
-  setup do
-    # :observer.start
-
-    :ok
-  end
-
   test ".reject filters a stream of variable length" do
     result = 1..5
               |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)
