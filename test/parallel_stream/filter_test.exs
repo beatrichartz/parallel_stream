@@ -13,6 +13,19 @@ defmodule ParallelStream.FilterTest do
     assert result == [2, 4]
   end
 
+  test ".filter kills all processes after it is done" do
+    { :links, links_before } = Process.info(self, :links)
+
+    result = 1..5
+              |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
+              |> Enum.into([])
+
+    :timer.sleep(10)
+    { :links, links_after } = Process.info(self, :links)
+
+    assert links_before == links_after
+  end
+
   test ".filter is repeatable" do
     stream = 1..5
               |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)

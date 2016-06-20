@@ -10,6 +10,19 @@ defmodule ParallelStream.RejectTest do
     assert result == [1, 3, 5]
   end
 
+  test ".reject kills all processes after it is done" do
+    { :links, links_before } = Process.info(self, :links)
+
+    result = 1..5
+              |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)
+              |> Enum.into([])
+
+    :timer.sleep(10)
+    { :links, links_after } = Process.info(self, :links)
+
+    assert links_before == links_after
+  end
+
   test ".reject is repeatable" do
     stream = 1..5
               |> ParallelStream.reject(fn i -> i |> rem(2) == 0 end)

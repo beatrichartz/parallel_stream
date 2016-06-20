@@ -13,6 +13,19 @@ defmodule ParallelStream.MapperTest do
     assert result == ~w(1 2 3 4 5)
   end
 
+  test ".map kills all processes after it is done" do
+    { :links, links_before } = Process.info(self, :links)
+
+    result = 1..5
+              |> ParallelStream.map(&Integer.to_string/1)
+              |> Enum.into([])
+
+    :timer.sleep(10)
+    { :links, links_after } = Process.info(self, :links)
+
+    assert links_before == links_after
+  end
+
   test ".map is repeatable" do
     stream = 1..5
               |> ParallelStream.map(&Integer.to_string/1)

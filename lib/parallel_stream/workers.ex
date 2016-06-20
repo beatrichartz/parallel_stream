@@ -7,8 +7,11 @@ defmodule ParallelStream.Workers do
   defmodule Worker do
     def work(inqueue, executor, fun) do
       send inqueue, { :next, self }
-      executor.execute(fun)
-      work(inqueue, executor, fun)
+      case executor.execute(fun) do
+        :ok ->
+          work(inqueue, executor, fun)
+        :halt -> :halt
+      end
     end
   end
 

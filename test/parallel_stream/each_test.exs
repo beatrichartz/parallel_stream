@@ -30,6 +30,19 @@ defmodule ParallelStream.EachTest do
     assert TestReceiver.rec |> Enum.sort == [1, 2, 3, 4, 5]
   end
 
+  test ".each kills all processes after it is done" do
+    { :links, links_before } = Process.info(self, :links)
+
+    1..12
+      |> ParallelStream.each(fn _ -> :timer.sleep(10) end)
+      |> Stream.run
+
+    :timer.sleep(10)
+    { :links, links_after } = Process.info(self, :links)
+
+    assert links_before == links_after
+  end
+
   test ".each is repeatable" do
     testmod = self
 
