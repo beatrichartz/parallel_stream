@@ -1,8 +1,6 @@
 defmodule ParallelStream.Workers do
-  alias ParallelStream.Executor
   alias ParallelStream.Outqueue
   alias ParallelStream.Inqueue
-  alias ParallelStream.Defaults
 
   defmodule Worker do
     def work(inqueue, executor, fun) do

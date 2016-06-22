@@ -16,9 +16,9 @@ defmodule ParallelStream.FilterTest do
   test ".filter kills all processes after it is done" do
     { :links, links_before } = Process.info(self, :links)
 
-    result = 1..5
-              |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
-              |> Enum.into([])
+    1..5
+      |> ParallelStream.filter(fn i -> i |> rem(2) == 0 end)
+      |> Enum.into([])
 
     :timer.sleep(10)
     { :links, links_after } = Process.info(self, :links)

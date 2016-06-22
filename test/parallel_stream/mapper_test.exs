@@ -16,9 +16,9 @@ defmodule ParallelStream.MapperTest do
   test ".map kills all processes after it is done" do
     { :links, links_before } = Process.info(self, :links)
 
-    result = 1..5
-              |> ParallelStream.map(&Integer.to_string/1)
-              |> Enum.into([])
+    1..5
+      |> ParallelStream.map(&Integer.to_string/1)
+      |> Enum.into([])
 
     :timer.sleep(10)
     { :links, links_after } = Process.info(self, :links)
