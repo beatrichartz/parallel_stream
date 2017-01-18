@@ -14,14 +14,14 @@ defmodule ParallelStream.MapperTest do
   end
 
   test ".map kills all processes after it is done" do
-    { :links, links_before } = Process.info(self, :links)
+    { :links, links_before } = Process.info(self(), :links)
 
     1..5
       |> ParallelStream.map(&Integer.to_string/1)
       |> Enum.into([])
 
     :timer.sleep(10)
-    { :links, links_after } = Process.info(self, :links)
+    { :links, links_after } = Process.info(self(), :links)
 
     assert links_before == links_after
   end
