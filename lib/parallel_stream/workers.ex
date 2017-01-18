@@ -4,7 +4,7 @@ defmodule ParallelStream.Workers do
 
   defmodule Worker do
     def work(inqueue, executor, fun) do
-      send inqueue, { :next, self }
+      send inqueue, { :next, self() }
       case executor.execute(fun) do
         :ok ->
           work(inqueue, executor, fun)
@@ -18,7 +18,7 @@ defmodule ParallelStream.Workers do
       Inqueue.distribute
     end
 
-    receiver = self
+    receiver = self()
 
     outqueues = 1..num |> Enum.map(fn _ ->
       { :ok, outqueue } = Task.start_link fn ->

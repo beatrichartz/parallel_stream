@@ -17,7 +17,7 @@ defmodule ParallelStream.EachTest do
   end
 
   test ".each iterates over a stream of variable length" do
-    testmod = self
+    testmod = self()
 
     1..5
     |> ParallelStream.each(fn i ->
@@ -25,26 +25,26 @@ defmodule ParallelStream.EachTest do
     end)
     |> Stream.run
 
-    send self, :stop
+    send self(), :stop
 
     assert TestReceiver.rec |> Enum.sort == [1, 2, 3, 4, 5]
   end
 
   test ".each kills all processes after it is done" do
-    { :links, links_before } = Process.info(self, :links)
+    { :links, links_before } = Process.info(self(), :links)
 
     1..12
       |> ParallelStream.each(fn _ -> :timer.sleep(10) end)
       |> Stream.run
 
     :timer.sleep(10)
-    { :links, links_after } = Process.info(self, :links)
+    { :links, links_after } = Process.info(self(), :links)
 
     assert links_before == links_after
   end
 
   test ".each is repeatable" do
-    testmod = self
+    testmod = self()
 
     stream = 1..5
     |> ParallelStream.each(fn i ->
@@ -53,13 +53,13 @@ defmodule ParallelStream.EachTest do
     stream |> Stream.run
     stream |> Stream.run
 
-    send self, :stop
+    send self(), :stop
 
     assert TestReceiver.rec |> Enum.sort == [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
   end
 
   test ".each iterates over a stream of zero length" do
-    testmod = self
+    testmod = self()
 
     []
     |> ParallelStream.each(fn i ->
@@ -67,7 +67,7 @@ defmodule ParallelStream.EachTest do
     end)
     |> Stream.run
 
-    send self, :stop
+    send self(), :stop
 
     assert TestReceiver.rec == []
   end
