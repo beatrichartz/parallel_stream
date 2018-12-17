@@ -13,7 +13,7 @@ defmodule ParallelStream.Producer do
     chunk_size = worker_count * worker_work_ratio
 
     stream
-    |> Stream.chunk(chunk_size, chunk_size, [])
+    |> Stream.chunk_every(chunk_size, chunk_size, [])
     |> Stream.transform(
     fn ->
       {
@@ -25,7 +25,7 @@ defmodule ParallelStream.Producer do
       { inqueue, workers, outqueues, 0 }
     end,
     fn items, { inqueue, workers, outqueues, index } ->
-      mapped = items |> Stream.with_index |> Enum.map(fn { item, i } -> 
+      mapped = items |> Stream.with_index |> Enum.map(fn { item, i } ->
       outqueue = outqueues |> Enum.at(rem(i, worker_count))
       inqueue |> send({ index + i, item, outqueue })
 
