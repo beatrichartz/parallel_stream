@@ -12,18 +12,21 @@ defmodule ParallelStream.Mapper do
     """
 
     def build!(stream) do
-      stream |> Stream.transform(0, fn items, acc ->
+      stream
+      |> Stream.transform(0, fn items, acc ->
         mapped = items |> receive_from_outqueue
 
-        { mapped, acc + 1 }
+        {mapped, acc + 1}
       end)
     end
 
     defp receive_from_outqueue(items) do
-      items |> Enum.map(fn { outqueue, index } ->
-        outqueue |> send({ :next, index })
+      items
+      |> Enum.map(fn {outqueue, index} ->
+        outqueue |> send({:next, index})
+
         receive do
-          { ^outqueue, { ^index, item } } ->
+          {^outqueue, {^index, item}} ->
             item
         end
       end)
@@ -52,7 +55,6 @@ defmodule ParallelStream.Mapper do
   def map(stream, mapper, options \\ []) do
     stream
     |> Producer.build!(mapper, options)
-    |> Consumer.build!
+    |> Consumer.build!()
   end
-
 end

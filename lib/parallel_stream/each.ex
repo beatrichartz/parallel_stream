@@ -12,18 +12,21 @@ defmodule ParallelStream.Each do
     """
 
     def build!(stream) do
-      stream |> Stream.transform(0, fn items, acc ->
+      stream
+      |> Stream.transform(0, fn items, acc ->
         items |> receive_from_outqueue
 
-        { items, acc + 1 }
+        {items, acc + 1}
       end)
     end
 
     defp receive_from_outqueue(items) do
-      items |> Enum.each(fn { outqueue, index } ->
-        outqueue |> send({ :next, index })
+      items
+      |> Enum.each(fn {outqueue, index} ->
+        outqueue |> send({:next, index})
+
         receive do
-          { ^outqueue, { ^index, item } } ->
+          {^outqueue, {^index, item}} ->
             item
         end
       end)
@@ -51,7 +54,8 @@ defmodule ParallelStream.Each do
       :ok # 12345 appears on stdout
   """
   def each(stream, mapper, options \\ []) do
-    stream |> Producer.build!(mapper, options)
-           |> Consumer.build!
+    stream
+    |> Producer.build!(mapper, options)
+    |> Consumer.build!()
   end
 end

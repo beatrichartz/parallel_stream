@@ -12,19 +12,23 @@ defmodule ParallelStream.Filter do
     """
 
     def build!(stream, direction) do
-      stream |> Stream.transform(0, fn items, acc ->
-        filtered = items |> Enum.reduce([], fn { outqueue, index }, list ->
-          outqueue |> send({ :next, index })
-          receive do
-            { ^outqueue, { ^index, accepted, item } } ->
-              case !!accepted do
-                ^direction -> list ++ [item]
-                _ -> list
-              end
-          end
-        end)
+      stream
+      |> Stream.transform(0, fn items, acc ->
+        filtered =
+          items
+          |> Enum.reduce([], fn {outqueue, index}, list ->
+            outqueue |> send({:next, index})
 
-        { filtered, acc + 1 }
+            receive do
+              {^outqueue, {^index, accepted, item}} ->
+                case !!accepted do
+                  ^direction -> list ++ [item]
+                  _ -> list
+                end
+            end
+          end)
+
+        {filtered, acc + 1}
       end)
     end
   end
@@ -80,6 +84,4 @@ defmodule ParallelStream.Filter do
     |> Producer.build!(mapper, FilterExecutor, options)
     |> Consumer.build!(false)
   end
-
-
 end

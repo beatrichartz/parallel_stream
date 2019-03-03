@@ -8,8 +8,9 @@ defmodule ParallelStream.Executor do
     receive do
       :halt ->
         :halt
-      { index, item, outqueue } ->
-        outqueue |> send({ index, fun.(item) })
+
+      {index, item, outqueue} ->
+        outqueue |> send({index, fun.(item)})
         :ok
     end
   end

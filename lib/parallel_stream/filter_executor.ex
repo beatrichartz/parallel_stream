@@ -7,8 +7,9 @@ defmodule ParallelStream.FilterExecutor do
     receive do
       :halt ->
         :halt
-      { index, item, outqueue } ->
-        outqueue |> send({ index, fun.(item), item })
+
+      {index, item, outqueue} ->
+        outqueue |> send({index, fun.(item), item})
         :ok
     end
   end

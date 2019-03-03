@@ -1,15 +1,19 @@
 defmodule ParallelStream.Inqueue do
   def distribute do
     receive do
-      { :next, worker } ->
+      {:next, worker} ->
         receive do
-          { index, item, outqueue } ->
-            send worker, { index, item, outqueue }
+          {index, item, outqueue} ->
+            send(worker, {index, item, outqueue})
             distribute()
-          :halt -> :halt
+
+          :halt ->
+            :halt
         end
+
       :halt ->
-        :halt #noop
+        # noop
+        :halt
     end
   end
 end
