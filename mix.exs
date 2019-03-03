@@ -14,7 +14,7 @@ defmodule ParallelStream.Mixfile do
         source_url: "https://github.com/beatrichartz/parallel_stream",
         description: "Parallel stream operations for Elixir",
         test_coverage: [tool: ExCoveralls],
-        preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test]
+        preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test]
     ]
   end
 
@@ -29,10 +29,10 @@ defmodule ParallelStream.Mixfile do
   defp deps do
     [
       {:excoveralls, "~> 0.5", only: :test},
-      {:ex_doc, only: :docs},
-      {:inch_ex, only: :docs},
-      {:earmark, only: :docs},
-      {:benchfella, only: :bench}
+      {:ex_doc, ">= 0.0.0", only: :docs},
+      {:inch_ex, ">= 0.0.0", only: :docs},
+      {:earmark, ">= 0.0.0", only: :docs},
+      {:benchfella, ">= 0.0.0", only: :bench}
     ]
   end
 
