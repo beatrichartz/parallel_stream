@@ -32,7 +32,7 @@ defmodule ParallelStream.Mixfile do
       {:ex_doc, only: :docs},
       {:inch_ex, only: :docs},
       {:earmark, only: :docs},
-      {:benchfella, "~> 0.3.0", only: [:dev]},
+      {:benchfella, "~> 0.3.0", only: [:bench]},
     ]
   end
 
