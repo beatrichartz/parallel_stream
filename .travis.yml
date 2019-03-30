@@ -14,7 +14,6 @@ before_script:
 env:
   - MIX_ENV=test
 script:
-  - mix test
   - mix coveralls.travis
 after_script:
   - mix deps.get --only docs
