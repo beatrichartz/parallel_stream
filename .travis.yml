@@ -7,9 +7,6 @@ elixir:
   - 1.9
   - 1.10
   - 1.11
-otp_release:
-  - '20'
-  - '21'
 sudo: false
 before_script:
   - mix deps.get --only test
