@@ -22,3 +22,5 @@ jobs:
       otp_release: '21.0'
     - elixir: '1.11'
       otp_release: '21.0'
+    - elixir: '1.11'
+      otp_release: '23.0'
