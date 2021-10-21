@@ -13,7 +13,7 @@ defmodule ParallelStream.Producer do
     chunk_size = worker_count * worker_work_ratio
 
     stream
-    |> Stream.chunk(chunk_size, chunk_size, [])
+    |> Stream.chunk_every(chunk_size, chunk_size, [])
     |> Stream.transform(
       fn ->
         {
