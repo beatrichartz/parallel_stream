@@ -117,6 +117,6 @@ defmodule ParallelStream.RejectTest do
         |> Stream.run()
       end)
 
-    assert microseconds < 100_000
+    assert microseconds < 110_000
   end
 end
