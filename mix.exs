@@ -41,7 +41,8 @@ defmodule ParallelStream.Mixfile do
 
     [
       source_ref: ref,
-      main: "overview"
+      extras: ["README.md"],
+      main: "readme"
     ]
   end
 end
