@@ -1,6 +1,6 @@
 defmodule ParallelStream.EachTest do
   use ExUnit.Case, async: true
-  @moduletag timeout: 100
+  @moduletag timeout: 1000
 
   alias ParallelStream.Each
   doctest Each
