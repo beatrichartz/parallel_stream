@@ -10,19 +10,19 @@ Operates with a worker pool.
 
 Add
 ```elixir
-{:parallel_stream, "~> 1.0.5"}
+{:parallel_stream, "~> 1.1.0"}
 ```
 to your deps in `mix.exs` like so:
 
 ```elixir
 defp deps do
   [
-    {:parallel_stream, "~> 1.0.5"}
+    {:parallel_stream, "~> 1.1.0"}
   ]
 end
 ```
 
-Note: Elixir `1.1.0` is required
+Note: Elixir `1.5.0` is required
 
 ## How to use
 
@@ -34,7 +34,7 @@ stream |> Enum.into([])
 [2,4,6,8,10,12,14,16,18,20]
 ````
 
-The generated stream is sorted the same as the input stream. 
+The generated stream is sorted the same as the input stream.
 
 More supported functions are `each` (to produce side-effects):
 
