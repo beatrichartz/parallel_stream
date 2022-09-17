@@ -28,7 +28,7 @@ defmodule ParallelStream.Mixfile do
 
   defp deps do
     [
-      {:excoveralls, "~> 0.5", only: :test},
+      {:excoveralls, "~> 0.14", only: :test},
       {:ex_doc, only: :dev},
       {:inch_ex, only: :dev},
       {:earmark, "1.4.15", only: :dev},
